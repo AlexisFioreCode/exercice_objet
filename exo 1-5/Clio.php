@@ -9,25 +9,30 @@ class Clio {
     const threedoors = 3 ; 
     const fivedoors = 5;
     const colors = [
-        "red" => 123456,
-        "blue" => 987654,
-        "yellow"=> 547869,
-        "green" => 125489,
-        "brown" => 598763,
-        "white" => 874589,
-        "black" => 365874,
-        "purple" => 254896,
+        "red" => 123,
+        "blue" => 987,
+        "yellow"=> 547,
+        "green" => 125,
+        "brown" => 598,
+        "white" => 874,
+        "black" => 365,
+        "purple" => 254,
          
     ];
-    public function __construct()
+    public function __construct($data)
     {
-        $this->setDoors(self::threedoors,self::fivedoors);
-        $this->setColor();
-        $this->setPrice();
+        foreach($data as $key =>$value) {
+            $setter = "set" . ucfirst($key);
+            if(method_exists( $this, $setter)) {
+                $this->$setter($value);
+            }
+        }
     }
 
     public function setDoors(int $doors) {
-        $this->doors = $doors;
+        if(in_array($doors, [self::threedoors, self::fivedoors])) {
+            $this->doors = $doors;
+          }
     }
 
     public function getDoors()
